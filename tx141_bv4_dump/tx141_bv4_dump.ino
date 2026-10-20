@@ -1,3 +1,7 @@
+// dump raw packets for timing tests, consistent with sync sequence for TX141_BV4 estimated using Audacity
+// receiver on external interrupt pin 2: YXR15, data output = high for 4333 MHz carrier ON.
+// S. J. Remington 10/19/2026, with help from Claude AI
+
 const uint8_t RX_PIN = 2;
 const uint8_t BUF_SIZE = 64;
 volatile uint16_t edgeBuf[BUF_SIZE];
@@ -14,7 +18,7 @@ void onEdge() {
   if (next != tail) { edgeBuf[head] = v; head = next; }
 }
 
-// Sync acceptance windows (us), widened to match your Audacity measurements
+// Sync acceptance windows (us), to match Audacity measurements
 const uint16_t SYNC_H_MIN = 700,  SYNC_H_MAX = 1600;
 const uint16_t SYNC_L_MIN = 300,  SYNC_L_MAX = 1500;
 const uint8_t  SYNC_PAIRS = 3;     // consecutive sync pairs required to trigger
