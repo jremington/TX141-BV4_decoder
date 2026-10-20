@@ -2,9 +2,9 @@
 // packet analysis and code written with much help from Claude, Sonnet 5.5 
 // S. J. Remington 10/19/2026
 // Pulse timing differs from that determined for previous versions of TX141 sensors, e.g. TX141_BV2
-
 // See https://github.com/merbanan/rtl_433/blob/master/src/devices/lacrosse_tx141x.c
-
+//
+// Assumes data input = 433 MHz OOK RF ON = HIGH (5v), YXR15 receiver used in development.
 /*
  Timing
 
@@ -18,16 +18,6 @@ Data bit “1”  H ≈ 490, L ≈ 245  2T high, 1T low
 Each data bit lasts 3T ≈ 735 µs, and every sync pair is 8T ≈ 1950 µs.
 
 TX141_BV4 sends four packets with each transmission
-
-Data packet structure for TX141_BV2, 3L grouped in 5 bytes / 10 nybbles
-
-    [id] [id] [flags] [temp] [temp] [temp] [humi] [humi] [chk] [chk]
-
-- id:    8 bit random integer generated at each powers up
-- flags: 4 bit for battery low indicator, test button press, and channel
-- temp: 12 bit unsigned temperature in degrees Celsius, scaled by 10, offset 500, range -40 C to 60 C
-- humi:  8 bit integer indicating relative humidity in %.
-- chk:   8 bit checksum is a digest, 0x31, 0xf4, reflected
 
 TX141_BV4 packet is four bytes plus 1 trailing 0 bit:
 
