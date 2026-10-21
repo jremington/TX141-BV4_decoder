@@ -1,6 +1,6 @@
 /*
   LaCrosse TX141-BV4 temperature sensor decoder
-  Arduino Uno + YSR15 433 MHz OOK receiver, DATA pin -> D2 (INT0)
+  Arduino Uno + YXR15 433 MHz OOK receiver, DATA pin -> D2 (INT0)  (HIGH=carrier ON)
 
   S.J. Remington with extensive help by Claude (Sonnet 5.5) 10/20/2026
 
