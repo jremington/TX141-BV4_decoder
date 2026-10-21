@@ -18,7 +18,7 @@
                               + swapNibbles(b2) + 0x66 )   (mod 256)
     - Flags: 0x8 bit set on all packets so far (assumed battery OK),
              0x4 bit set on button-forced transmissions
-             lowest two bits presumably sensor ID: 1, 2 or 3 supported by display
+             lowest two bits presumably sensor channel: 1, 2 or 3 supported by display
     - Each reading is sent as a burst of ~8-16 identical packets
 */
 
