@@ -76,7 +76,10 @@ static inline uint8_t swapNibbles(uint8_t b) {
   return (uint8_t)((b << 4) | (b >> 4));
 }
 
-bool checksumOk() {  //four bit processor in the sensor?
+//  this checksum algorithm would be a simple addition if the data packet were stored as
+// nibbles instead of bytes, so I suspect the sensor uses a four bit processor
+
+bool checksumOk() { 
   uint8_t s = swapNibbles(pkt[0]) + swapNibbles(pkt[1]) + swapNibbles(pkt[2]) + 0x66;
   return swapNibbles(s) == pkt[3];
 }
