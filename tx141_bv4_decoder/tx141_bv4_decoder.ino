@@ -2,7 +2,7 @@
   LaCrosse TX141-BV4 temperature sensor decoder
   Arduino Uno + YSR15 433 MHz OOK receiver, DATA pin -> D2 (INT0)
 
-  S.J. Remington with the help of Claude (Sonnet 5.5) 10/20/2026
+  S.J. Remington with extensive help by Claude (Sonnet 5.5) 10/20/2026
 
   Protocol (as measured):
     - OOK, pulse-width coded, time unit T ~ 244 us
@@ -18,6 +18,7 @@
                               + swapNibbles(b2) + 0x66 )   (mod 256)
     - Flags: 0x8 bit set on all packets so far (assumed battery OK),
              0x4 bit set on button-forced transmissions
+             lowest two bits presumably sensor ID: 1, 2 or 3 supported by display
     - Each reading is sent as a burst of ~8-16 identical packets
 */
 
@@ -75,7 +76,7 @@ static inline uint8_t swapNibbles(uint8_t b) {
   return (uint8_t)((b << 4) | (b >> 4));
 }
 
-bool checksumOk() {
+bool checksumOk() {  //four bit processor in the sensor?
   uint8_t s = swapNibbles(pkt[0]) + swapNibbles(pkt[1]) + swapNibbles(pkt[2]) + 0x66;
   return swapNibbles(s) == pkt[3];
 }
@@ -97,10 +98,12 @@ void report() {
   lastReport = now;
 
   int16_t raw = ((int16_t)(pkt[1] & 0x0F) << 8) | pkt[2];   // signed: avoids wrap below 0 C
-  float c = (raw - 500) / 10.0;
+  float c = (raw - 500) / 10.0; //to degrees C
 
   Serial.print(F("id=0x")); hex2(pkt[0]);
   Serial.print(F("  flags=0x")); Serial.print(pkt[1] >> 4, HEX);
+  uint8_t ch = (pkt[1] >> 4) & 0x03;
+  Serial.print(F("  ch=")); Serial.print(ch);  
   Serial.print(F("  T=")); Serial.print(c, 1);
   Serial.print(F(" C  ")); Serial.print(c * 9.0 / 5.0 + 32.0, 1);
   Serial.println(F(" F"));
