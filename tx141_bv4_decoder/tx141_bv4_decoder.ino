@@ -8,7 +8,7 @@
     - OOK, pulse-width coded, time unit T ~ 244 us
     - Sync pulse: ~976 us high + ~976 us low (4T/4T), 3-4 per packet
     - Bit "0": ~240 us high + ~490 us low   Bit "1": ~490 us high + ~245 us low
-    - Payload: 32 bits, MSB first, [acket has 33rd trailing bit=0 (ignored).
+    - Payload: 32 bits, MSB first, packet has 33rd trailing bit=0 (ignored).
         byte 0 : sensor ID (changes when the battery is replaced)
         byte 1 : flags nibble (high) + temperature bits 11..8 (low)
         byte 2 : temperature bits 7..0
@@ -18,7 +18,9 @@
                               + swapNibbles(b2) + 0x66 )   (mod 256)
     - Flags: 0x8 bit set on all packets so far (assumed battery OK),
              0x4 bit set on button-forced transmissions
-             lowest two bits presumably sensor channel: 1, 2 or 3 supported by display
+             0x1 bit set on all packets so far, channel 1 on display?
+                 lowest two bits presumably sensor channel: 
+                 channels 1,2,3 are supported by display WS-9160Uv3
     - Each reading is sent as a burst of ~8-16 identical packets
 */
 
@@ -32,13 +34,14 @@ volatile uint16_t edgeBuf[BUF_SIZE];      // bit 15 = ended pulse was HIGH
 volatile uint8_t head = 0, tail = 0;
 volatile uint32_t lastEdge = 0;
 
+// pin 2 ISR
 void onEdge() {
   uint32_t now = micros();
   uint32_t d = now - lastEdge;
   lastEdge = now;
   if (d > 0x7FFF) d = 0x7FFF;
   bool nowHigh = digitalRead(RX_PIN);
-  uint16_t v = (uint16_t)d | (nowHigh ? 0 : 0x8000);
+  uint16_t v = (uint16_t)d | (nowHigh ? 0 : 0x8000);  //flag TX ON pulses
   uint8_t next = (head + 1) & (BUF_SIZE - 1);
   if (next != tail) {                     // drop edge if buffer is full
     edgeBuf[head] = v;
@@ -76,8 +79,8 @@ static inline uint8_t swapNibbles(uint8_t b) {
   return (uint8_t)((b << 4) | (b >> 4));
 }
 
-//  this checksum algorithm would be a simple addition if the data packet were stored as
-// nibbles instead of bytes, so I suspect the sensor uses a four bit processor
+// Checksum algorithm would be simple addition with two 4-bit accumulators 
+// for data packet stored as nibbles. Suspect sensor uses a four bit processor
 
 bool checksumOk() { 
   uint8_t s = swapNibbles(pkt[0]) + swapNibbles(pkt[1]) + swapNibbles(pkt[2]) + 0x66;
