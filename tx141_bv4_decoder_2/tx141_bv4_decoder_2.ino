@@ -41,7 +41,7 @@ void onEdge() {
   lastEdge = now;
   if (d > 0x7FFF) d = 0x7FFF;
   bool carrierNow = (digitalRead(RX_PIN) == HIGH) != RX_ACTIVE_LOW;
-  uint16_t v = (uint16_t)d | (carrierNow ? 0 : 0x8000);   // bit 15 = ended interval had carrier ON
+  uint16_t v = (uint16_t)d | (carrierNow ? 0 : 0x8000);   // inverse logic: bit 15 = ended interval had carrier ON
   uint8_t next = (head + 1) & (BUF_SIZE - 1);
   if (next != tail) { edgeBuf[head] = v; head = next; }
 }
