@@ -1,5 +1,5 @@
 // dump raw packets for timing tests, consistent with sync sequence for TX141_BV4 estimated using Audacity
-// receiver on external interrupt pin 2: YXR15, data output = LOW for 433 MHz carrier ON.
+// receiver on external interrupt pin 2: YXR15, DATA OUTPUT = LOW for 433 MHz carrier ON.
 // S. J. Remington 10/19/2026, with help from Claude AI
 
 const uint8_t RX_PIN = 2;
@@ -13,7 +13,7 @@ void onEdge() {
   uint32_t d = now - lastEdge; lastEdge = now;
   if (d > 0x7FFF) d = 0x7FFF;
   bool nowHigh = digitalRead(RX_PIN);
-  uint16_t v = (uint16_t)d | (nowHigh ? 0 : 0x8000);   // bit15 = ended pulse was HIGH
+  uint16_t v = (uint16_t)d | (nowHigh ? 0 : 0x8000);   // inverse logic: bit15 = ended pulse was HIGH
   uint8_t next = (head + 1) & (BUF_SIZE - 1);
   if (next != tail) { edgeBuf[head] = v; head = next; }
 }
@@ -32,7 +32,8 @@ void dumpCapture() {
   for (uint8_t i = 0; i < CAP_LEN; i++) {
     Serial.print((cap[i] & 0x8000) ? 'H' : 'L');
     Serial.print(cap[i] & 0x7FFF);
-    Serial.print(i % 8 == 7 ? '\n' : ' ');
+    Serial.print(i % 8 == 7 ? "\r\n" : " ");
+    if ((cap[i] & 0x7FFF) == 0x7FFF) break; //exit loop
   }
   Serial.println();
 }
