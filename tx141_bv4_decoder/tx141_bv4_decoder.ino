@@ -10,7 +10,7 @@
     - OOK, pulse-width coded, time unit T ~ 244 us
     - Sync pulse: ~976 us high + ~976 us low (4T/4T), 3-4 per packet
     - Bit "1": ~240 us high + ~490 us low   Bit "0": ~490 us high + ~245 us low 
-    - Payload: 32 bits, MSB first, [acket has 33rd trailing bit=0 (ignored).
+    - Payload: 32 bits, MSB first, packet has 33rd trailing bit=0 (ignored).
         byte 0 : sensor ID (changes when the battery is replaced)
         byte 1 : flags nibble (high) + temperature bits 11..8 (low)
         byte 2 : temperature bits 7..0
