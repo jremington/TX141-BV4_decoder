@@ -1,5 +1,5 @@
 // dump raw packets for timing tests, consistent with sync sequence for TX141_BV4 estimated using Audacity
-// receiver on external interrupt pin 2: YXR15, data output = high for 433 MHz carrier ON.
+// receiver on external interrupt pin 2: YXR15, data output = LOW for 433 MHz carrier ON.
 // S. J. Remington 10/19/2026, with help from Claude AI
 
 const uint8_t RX_PIN = 2;
