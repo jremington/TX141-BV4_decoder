@@ -8,8 +8,8 @@
 
   Protocol (as measured):
     - OOK, pulse-width coded, time unit T ~ 244 us
-    - Sync pulse: ~976 us high + ~976 us low (4T/4T), 3-4 per packet
-    - Bit "1": ~240 us high + ~490 us low   Bit "0": ~490 us high + ~245 us low 
+    - Sync: 4 pulses of ~976 us high + ~976 us low
+    - Bit "0": ~244 us high + ~488 us low,  Bit "1": ~488 us high + ~244 us low
     - Payload: 32 bits, MSB first, packet has 33rd trailing bit=0 (ignored).
         byte 0 : sensor ID (changes when the battery is replaced)
         byte 1 : flags nibble (high) + temperature bits 11..8 (low)
@@ -20,6 +20,7 @@
                               + swapNibbles(b2) + 0x66 )   (mod 256)
     - Flags: 0x8 bit set on all packets so far (assumed battery OK),
              0x4 bit set on button-forced transmissions
+             0x1 bit set for sensor #1
     - Each reading is sent as a burst of ~4 packets
 */
 
