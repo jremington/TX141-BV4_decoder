@@ -1,6 +1,7 @@
 /*
   LaCrosse TX141-BV4 temperature sensor decoder
   Arduino Uno + YXR15 433 MHz OOK receiver, DATA pin -> D2 (INT0), data output LOW = carrier ON
+  For receiver with HIGH = carrier ON, set RX_ACTIVE_LOW to false below
   
   S.J. Remington with the help of Claude (Sonnet 5.5) 10/29/2026
 
