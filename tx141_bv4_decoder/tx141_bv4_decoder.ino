@@ -119,6 +119,10 @@ void addBit(bool b) {
     resetAll();
   }
 }
+// handle bit interpretation. For inverting receiver, HIGH = carrier off state
+// since the bit timing for sync pulses is the same for carrier on and carrier off
+// the sampled pattern is shifted one to the left, and the queried pulse becomes 
+// the second part of the bit period. 
 
 void handle(bool high, uint16_t d) {
   if (high) {
@@ -129,6 +133,10 @@ void handle(bool high, uint16_t d) {
     } else if (state != IDLE && syncCount >= MIN_SYNC && d >= BIT_MIN && d <= BIT_MAX) {
       state = DATA;
       addBit(d >= BIT_SPLIT);                       // long high = 1, short high = 0
+            
+      // for *noninverting receiver*, change the above to
+      // addBit(d <= BIT_SPLIT); 
+      
     } else {
       resetAll();
     }
