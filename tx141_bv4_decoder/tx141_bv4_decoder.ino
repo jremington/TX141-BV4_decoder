@@ -40,7 +40,7 @@ void onEdge() {
   lastEdge = now;
   if (d > 0x7FFF) d = 0x7FFF;
   bool nowHigh = digitalRead(RX_PIN);
-  uint16_t v = (uint16_t)d | (nowHigh ? 0 : 0x8000);
+  uint16_t v = (uint16_t)d | (nowHigh ? 0 : 0x8000);  //set flag for previous pulse H/L state
   uint8_t next = (head + 1) & (BUF_SIZE - 1);
   if (next != tail) {                     // drop edge if buffer is full
     edgeBuf[head] = v;
