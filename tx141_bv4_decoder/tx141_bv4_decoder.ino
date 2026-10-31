@@ -7,7 +7,7 @@
 
   Protocol (as measured):
     - OOK, pulse-width coded, time unit T ~ 244 us
-    - Sync pulse: ~976 us high + ~976 us low (4T/4T), 3-4 per packet
+    - Sync pulse: ~976 us high + ~976 us low (4T/4T), 4 per packet
     - Bit "1": ~245 us high (carrier ON) + ~490 us low (carrier OFF)
     - Bit "0": ~490 us high + ~245 us low
     - Payload: 32 bits, MSB first, packet has 33rd trailing bit=0 (ignored).
@@ -20,6 +20,7 @@
                               + swapNibbles(b2) + 0x66 )   (mod 256)
     - Flags: 0x8 bit set on all packets so far (assumed battery OK),
              0x4 bit set on button-forced transmissions
+             0x1 bit set on all transmissions, assumed this is sensor #1
     - Each reading is sent as two bursts of 4 identical packets, ~20 ms gap between bursts
     - Reading sent about every 30 seconds
 */
