@@ -8,3 +8,7 @@ S. J. Remington 10/19/2026
 
 Note: Pulse timing, packet size and checksum calculation (not a CRC) differ substantially from that determined for previous versions of TX141 sensors, e.g. TX141_BV2
 See https://github.com/merbanan/rtl_433/blob/master/src/devices/lacrosse_tx141x.c
+
+Screenshot of Pulseview capture of TX141-BV4 packet:
+
+<img width="908" height="292" alt="Screenshot 2026-10-31 113139" src="https://github.com/user-attachments/assets/32211ad9-5663-4271-a6e5-5d8f2ac5d65c" />
