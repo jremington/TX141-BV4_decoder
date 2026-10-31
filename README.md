@@ -9,7 +9,7 @@ S. J. Remington 10/19/2026
 Note: Pulse timing, packet size and checksum calculation (not a CRC) differ substantially from that determined for previous versions of TX141 sensors, e.g. TX141_BV2
 See https://github.com/merbanan/rtl_433/blob/master/src/devices/lacrosse_tx141x.c
 
-Screenshot of Pulseview capture of TX141-BV4 packet:
+Screenshot of Pulseview capture of a TX141-BV4 packet. Receiver used here is an RXB6 superhet connected directly to logic analyzer.
 
 <img width="1003" height="266" alt="Screenshot 2026-10-31 113635" src="https://github.com/user-attachments/assets/3d038e12-6fcb-4569-b6e3-b6143cc25ff0" />
 
