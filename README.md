@@ -11,4 +11,5 @@ See https://github.com/merbanan/rtl_433/blob/master/src/devices/lacrosse_tx141x.
 
 Screenshot of Pulseview capture of TX141-BV4 packet:
 
-<img width="908" height="292" alt="Screenshot 2026-10-31 113139" src="https://github.com/user-attachments/assets/32211ad9-5663-4271-a6e5-5d8f2ac5d65c" />
+<img width="1003" height="266" alt="Screenshot 2026-10-31 113635" src="https://github.com/user-attachments/assets/3d038e12-6fcb-4569-b6e3-b6143cc25ff0" />
+
