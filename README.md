@@ -2,7 +2,8 @@ Arduino C/C++ decoder for LaCrosse TX141-BV4 temperature sensor.
 
 Packet timing and content analysis were performed and code was written with help from Claude.ai, Sonnet 5.5
 
-Receiver used: 433 MHz OOK YXR15, data output = LOW for TX carrier ON, connected to external interrupt pin 2, 5V power and GND. Tested on Arduino Uno.
+Receivers used: 433 MHz OOK YXR15, RXB6 superhet, data output = LOW for TX carrier ON, connected to external interrupt pin 2, 5V power and GND. 
+Code developed and tested on Arduino Uno, Arduino IDE 1.8.19
 
 S. J. Remington 10/19/2026
 
