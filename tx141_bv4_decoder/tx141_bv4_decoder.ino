@@ -135,10 +135,11 @@ void addBit(bool b) {
     resetAll();
   }
 }
-// handle bit interpretation. high = 1 => carrier ON state
+// handle bit interpretation. 
 
 void handle(bool high, uint16_t d) {
   if (high) { 
+    //carrier is ON
     if (d >= SYNC_MIN && d <= SYNC_MAX) {           // sync pulse
       if (state == DATA) resetAll();                // a new packet began mid-data
       if (syncCount < 255) syncCount++;
