@@ -42,7 +42,11 @@ void onEdge() {
   uint32_t d = now - lastEdge;
   lastEdge = now;
   if (d > 0x7FFF) d = 0x7FFF;
-  bool carrierOn = !digitalRead(RX_PIN);  //for inverting receiver, carrierOn = 1 for LOW
+  bool carrierOn = !digitalRead(RX_PIN);  //! for inverting receiver, carrierOn = 1 for LOW
+  
+  // for noninverting receiver, remove "!" above and change also the call in routine handle() below to
+  //       addBit(d >= BIT_SPLIT);                       // short carrier ON pulse = 1 for TX141-BV4
+  
   uint16_t v = (uint16_t)d | (carrierOn ? 0 : 0x8000); //store bit state of PREVIOUS pulse
   uint16_t next = (head + 1) & (BUF_SIZE - 1);
   if (next != tail) {                     // drop edge if buffer is full
