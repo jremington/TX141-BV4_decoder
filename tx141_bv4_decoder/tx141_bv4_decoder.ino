@@ -145,7 +145,7 @@ void handle(bool high, uint16_t d) {
       state = SYNC;
     } else if (state != IDLE && syncCount >= MIN_SYNC && d >= BIT_MIN && d <= BIT_MAX) {
       state = DATA;
-      addBit(d < BIT_SPLIT);                       // measure short carrier ON pulse for TX141-BV4
+      addBit(d < BIT_SPLIT);                       // "1" = short carrier ON pulse for TX141-BV4
       } else {
       resetAll();
     }
