@@ -6,7 +6,7 @@ Receiver used: 433 MHz OOK YXR15, data output = LOW for TX carrier ON, connected
 
 S. J. Remington 10/19/2026
 
-Note: Pulse timing, packet size and checksum calculation (not a CRC) differ substantially from that determined for previous versions of TX141 sensors, e.g. TX141_BV2
+Note: Pulse timing, packet size and checksum calculation (not a CRC) differ substantially from that determined for previous versions of TX141 sensors, e.g. TX141-BV2
 See https://github.com/merbanan/rtl_433/blob/master/src/devices/lacrosse_tx141x.c
 
 Screenshot of Pulseview capture of a TX141-BV4 packet. Receiver used here is an RXB6 superhet (inverting, LOW = carrier ON) connected directly to logic analyzer.
