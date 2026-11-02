@@ -31,6 +31,8 @@ const uint8_t  REPEATS     = 2;      // identical packets in one burst per readi
 const uint32_t INTERBURST_GAP_MS = 20;    
 const uint32_t INTERVAL_MS = 5000UL;// pause between readings (real sensor: ~30 s)
 
+const uint16_t SYNC_PULSEWIDTH_OFFSET 100; //for receiver calibration, change relative widths of H/L sync pulse
+
 // Test temperatures in tenths of a degree C, chosen to cross the values that exposed
 // carry behaviour in the checksum: sub-zero, 0, ~9.2, ~26.8, ~28.4
 const int16_t TEMPS_TENTHS[] = {
@@ -79,7 +81,7 @@ void sendBit(bool one) {
 
 void sendPacket(const uint8_t p[4]) {
   // +/- 100 allows to distinguish SYNC 1/0 for receiver calibration, passes length test in decoder
-  for (uint8_t i = 0; i < SYNC_PULSES; i++) pulse(SYNC_US + 100, SYNC_US - 100); 
+  for (uint8_t i = 0; i < SYNC_PULSES; i++) pulse(SYNC_US + SYNC_PULSEWIDTH_OFFSET, SYNC_US - SYNC_PULSEWIDTH_OFFSET); 
   for (uint8_t i = 0; i < 32; i++) sendBit(p[i >> 3] & (0x80 >> (i & 7)));
   pulse(T_US, 2*T_US);  // trailing "0" bit
   delay(INTERBURST_GAP_MS);
