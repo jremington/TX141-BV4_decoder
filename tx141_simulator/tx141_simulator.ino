@@ -18,7 +18,7 @@
 */
 
 const uint8_t TX_PIN = 2;
-const bool INVERT_TX = true;   // if true, LOW = carrier ON
+const bool INVERT_TX = true;   // if true, carrier on during LOW pulse segment
 
 // ---- Simulated sensor settings --------------------------------------------
 const uint8_t SENSOR_ID    = 0x0F;   // real sensors pick a new random ID at battery insertion
@@ -27,7 +27,7 @@ const uint8_t CHANNEL_BITS = 0x01;   // flags bits 1:0. Channel 1 = 0x01 (observ
 const bool    BATTERY_OK   = true;   // flags bit 0x8 (set on every real packet seen so far)
 const bool    FORCED_TX    = false;  // flags bit 0x4 (set on button-forced transmissions)
 
-const uint8_t  REPEATS     = 4;      // identical packets in one burst per reading (real sensor: 4)
+const uint8_t  REPEATS     = 2;      // identical packets in one burst per reading (real sensor: 4)
 const uint32_t INTERBURST_GAP_MS = 20;    
 const uint32_t INTERVAL_MS = 5000UL;// pause between readings (real sensor: ~30 s)
 
