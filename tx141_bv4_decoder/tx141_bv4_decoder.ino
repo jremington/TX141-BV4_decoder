@@ -45,8 +45,8 @@ void onEdge() {
   uint32_t d = now - lastEdge;
   lastEdge = now;
   if (d > 0x7FFF) d = 0x7FFF;
-  bool carrierOn = !digitalRead(RX_PIN);  //for inverting receiver, carrierOn = 1 for LOW
-  uint16_t v = (uint16_t)d | (carrierOn ? 0 : 0x8000); //store bit state of PREVIOUS pulse
+  bool carrierOn = digitalRead(RX_PIN);  //for inverting receiver, carrierOn = 0 for LOW
+  uint16_t v = (uint16_t)d | (!carrierOn ? 0x8000 : 0); //store bit state of PREVIOUS pulse
   uint16_t next = (head + 1) & (BUF_SIZE - 1);
   if (next != tail) {                     // drop edge if buffer is full
     edgeBuf[head] = v;
@@ -135,18 +135,18 @@ void addBit(bool b) {
     resetAll();
   }
 }
-// handle bit interpretation. 
+// handle bit interpretation. high = 1 => carrier OFF state
+// Here, measure bit length of carrier ON state, presumably less sensitive to noise
 
 void handle(bool high, uint16_t d) {
-  if (high) { 
-    //carrier is ON
+  if (!high) { 
     if (d >= SYNC_MIN && d <= SYNC_MAX) {           // sync pulse
       if (state == DATA) resetAll();                // a new packet began mid-data
       if (syncCount < 255) syncCount++;
       state = SYNC;
     } else if (state != IDLE && syncCount >= MIN_SYNC && d >= BIT_MIN && d <= BIT_MAX) {
       state = DATA;
-      addBit(d < BIT_SPLIT);                       // "1" = short carrier ON pulse for TX141-BV4
+      addBit(d < BIT_SPLIT);                       // measure short carrier ON pulse for TX141-BV4
       } else {
       resetAll();
     }
@@ -157,7 +157,7 @@ void handle(bool high, uint16_t d) {
 
 // ---------------------------------------------------------------------------
 void setup() {
-  Serial.begin(230400);
+  Serial.begin(115200);
   pinMode(RX_PIN, INPUT);
   lastEdge = micros();
   attachInterrupt(digitalPinToInterrupt(RX_PIN), onEdge, CHANGE);
