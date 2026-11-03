@@ -2,8 +2,9 @@
 // checked 11/2/2026, working OK with THN132N sensor and RXB6 or YXR15 receivers
 // based on code from (and others)
 // Version 1.0 - Hubert Mickael <mickael@winlux.fr> (https://github.com/Mickaelh51)
-// see also https://jeelabs.net/projects/cafe/wiki/Decoding_the_Oregon_Scientific_V2_protocol// "Simple C" version
-// added simple checksum test for THN132N and THRN122N sensors.
+// see also https://jeelabs.net/projects/cafe/wiki/Decoding_the_Oregon_Scientific_V2_protocol
+// "Simple C" version of lib
+// added checksum test for THN132N and THRN122N sensors.
 // For checksum test to work, above sensors must be identified as or set to channels 2 and 1, respectively
 
 #include "OSV2_lib.h"
