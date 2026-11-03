@@ -201,7 +201,7 @@ byte channel(void)
 // return trend bits, at least for THN132N
 
 unsigned char trend(void) {
-  return data[4] & 0x03; //2=falling?, 1=rising, 0=constant
+  return data[4] & 0x03; //2=falling, 1=rising, 0=constant
 }
 
 // hex dump of record received
