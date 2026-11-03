@@ -16,9 +16,9 @@ void onEdge() {
   if (d > 0x7FFF) d = 0x7FFF;
   
   //get pin state after transition
-  bool carrierOn = !digitalRead(RX_PIN);  //for inverting receiver (data LOW = carrier ON)
+  bool carrierOn = digitalRead(RX_PIN);  //inverting receiver (data LOW = carrier ON)
   
-  uint16_t v = (uint16_t)d | (carrierOn ? 0 : 0x8000);   //, invert, bit15 = last pulse: 1 = carrier ON
+  uint16_t v = (uint16_t)d | (!carrierOn ? 0x8000 : 0);   //bit15 = last pulse 1/0
   unsigned int next = (head + 1) & (BUF_SIZE - 1);
   if (next != tail) { edgeBuf[head] = v; head = next; }
 }
