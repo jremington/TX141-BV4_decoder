@@ -14,5 +14,7 @@ Screenshot of Pulseview capture of a TX141-BV4 packet. Receiver used here is an 
 
 <img width="1177" height="372" alt="TX141-BV4_capture" src="https://github.com/user-attachments/assets/5b4aed3d-3a88-4d1f-8c1e-ce467a07a791" />
 
+Bonus: decode Oregon Scientific sensors THN132N and THN122, also Manchester encoded
+
 
 
