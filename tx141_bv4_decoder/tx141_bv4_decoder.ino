@@ -45,8 +45,8 @@ void onEdge() {
   uint32_t d = now - lastEdge;
   lastEdge = now;
   if (d > 0x7FFF) d = 0x7FFF;
-  bool carrierOn = digitalRead(RX_PIN);  //for inverting receiver, carrierOn = 0 for LOW
-  uint16_t v = (uint16_t)d | (!carrierOn ? 0x8000 : 0); //store bit state of PREVIOUS pulse
+  bool carrierOn = !digitalRead(RX_PIN);  //for inverting receiver, carrierOn = 1 for LOW
+  uint16_t v = (uint16_t)d | (carrierOn ? 0x8000 : 0); //store bit state of PREVIOUS pulse
   uint16_t next = (head + 1) & (BUF_SIZE - 1);
   if (next != tail) {                     // drop edge if buffer is full
     edgeBuf[head] = v;
